@@ -1,0 +1,35 @@
+package javaProgramming;
+import java.util.Scanner;
+import shapes.*;
+
+public class Main {
+	public static void main(String [] args) {
+		Scanner sc= new Scanner(System.in);
+		
+		//Square//
+		System.out.println("Enter the Side of Square: ");
+		double side= sc.nextDouble();
+		Square sq= new Square();
+		System.out.println("Area of Square: " + sq.area(side));
+		sq.show();
+		
+		//Triangle//
+		System.out.println("Enter the Base of Triangle: ");
+		double base= sc.nextDouble();
+		System.out.println("Enter the Height of Triangle: ");
+		double height= sc.nextDouble();
+		Triangle tri= new Triangle();
+		System.out.println("Area of Triangle: " + tri.area(base,height));
+		tri.show();
+		
+		//Circle//
+		System.out.println("Enter the Radius of Circle: ");
+		double radius= sc.nextDouble();
+		Circle cir= new Circle();
+		System.out.println("Area of Circle: " + cir.area(radius));
+		cir.show();
+		
+		sc.close();
+		
+	}
+}
