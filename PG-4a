@@ -1,0 +1,80 @@
+package javaProgramming;
+import java.util.Scanner;
+
+abstract class Printer {
+abstract void configuration();
+abstract void display();
+}
+
+class DotMatrix extends Printer {
+
+ void configuration() {
+     System.out.println("\nDot-Matrix Printer Configuration:");
+     System.out.println("Technology: Impact Printing");
+     System.out.println("Resolution: 144 x 144 DPI");
+     System.out.println("Speed: 300 CPS");
+ }
+
+ void display() {
+     System.out.println("Dot-Matrix Printer: Used for Low-cost printing.");
+ }
+}
+
+class LaserJet extends Printer {
+
+ void configuration() {
+     System.out.println("\nLaserJet Printer Configuration:");
+     System.out.println("Technology: Laser Printing");
+     System.out.println("Resolution: 1200 x 1200 DPI");
+     System.out.println("Speed: 25 PPM");
+ }
+
+ void display() {
+     System.out.println("LaserJet Printer: Used for Fast printing.");
+ }
+}
+
+
+public class PrinterDemo {
+ public static void main(String[] args) {
+
+     Scanner sc = new Scanner(System.in);
+     int choice;
+
+     do {
+         System.out.println("\n Printer Menu:");
+         System.out.println("1. Dot-Matrix Printer");
+         System.out.println("2. LaserJet Printer");
+         System.out.println("3. Exit");
+         System.out.print("Enter your choice: ");
+         choice = sc.nextInt();
+
+         Printer p;
+
+         switch (choice) {
+             case 1:
+                 p = new DotMatrix();
+                 p.configuration();
+                 p.display();
+                 break;
+
+             case 2:
+                 p = new LaserJet();
+                 p.configuration();
+                 p.display();
+                 break;
+
+             case 3:
+                 System.out.println("Exited");
+                 break;
+
+             default:
+                 System.out.println("Invalid choice! Try again.");
+         }
+
+     } while (choice != 3);
+
+     sc.close();
+ }
+}
+
