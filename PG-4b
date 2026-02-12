@@ -1,0 +1,59 @@
+package javaProgramming;
+
+interface Vehicle{
+    void start();
+    void stop();
+}
+
+abstract class VehicleBase{
+    abstract void Drive();
+}
+
+class Car extends VehicleBase implements Vehicle {
+    @Override
+    public void start() {
+        System.out.println("Car is starting");
+    }
+    
+    @Override
+    public void stop() {
+        System.out.println("Car is stopping");
+    }
+
+    @Override
+    void Drive() {
+        System.out.println("Car is driving");
+    }
+}
+
+class Bike extends VehicleBase implements Vehicle {
+    @Override
+    public void start() {
+        System.out.println("Bike is starting");
+    }
+
+    @Override
+    public void stop() {
+        System.out.println("Bike is stopping");
+    }
+
+    @Override
+    void Drive() {
+        System.out.println("Bike is driving");
+    }
+}
+
+public class VehicleDemo {
+    public static void main(String[] args) {
+    	
+        Vehicle car = new Car();
+        car.start();
+        car.stop();
+        ((Car) car).Drive();
+
+        Vehicle bike = new Bike();
+        bike.start();
+        bike.stop();
+        ((Bike) bike).Drive();
+    }
+}
