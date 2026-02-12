@@ -1,0 +1,163 @@
+package javaProgramming;
+import java.util.Scanner;
+
+class BankAccount {
+    private String name;
+    private String type;
+    private float balance;
+
+    static int totalAccounts = 0;
+
+    BankAccount(String name) {
+        this(name, "Savings", 0);
+    }
+    
+    BankAccount(String name, String type) {
+        this(name, type, 0);
+    }
+
+    BankAccount(String name, String type, float balance) {
+        this.name = name;
+        this.type = type;
+        this.balance = balance;
+        totalAccounts++;
+    }
+
+    void deposit(float amt) {
+        if (amt <= 0) {
+            System.out.println("Invalid amount!");
+            return;
+        }
+        this.balance += amt;
+        System.out.println("Deposited ₹" + amt);
+    }
+
+    void deposit(float amt, String mode) {
+        if (amt <= 0) {
+            System.out.println("Invalid amount!");
+            return;
+        }
+        this.balance += amt;
+        System.out.println("Deposited ₹" + amt + " via " + mode);
+    }
+
+    void withdraw(float amt) {
+        if (amt <= 0) {
+            System.out.println("Invalid amount!");
+            return;
+        }
+        if (amt > this.balance) {
+            System.out.println("Insufficient balance!");
+            return;
+        }
+        this.balance -= amt;
+        System.out.println("Withdrawn ₹" + amt);
+    }
+
+    static void showTotalAccounts() {
+        System.out.println("Total Accounts Created: " + totalAccounts);
+    }
+    
+    void display() {
+        System.out.println("\nACCOUNT DETAILS:");
+        System.out.println("Name     : " + this.name);
+        System.out.println("Type     : " + this.type);
+        System.out.println("Balance  : ₹" + this.balance);
+    }
+}
+
+public class Bankapp {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        System.out.println("----- CREATE BANK ACCOUNT -----");
+        System.out.println("1. Name only");
+        System.out.println("2. Name + Type");
+        System.out.println("3. Name + Type + Initial Balance");
+        System.out.print("Enter choice: ");
+        choice = sc.nextInt();
+        sc.nextLine();
+
+        BankAccount acc = null;
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter Name: ");
+                acc = new BankAccount(sc.nextLine());
+                break;
+
+            case 2:
+                System.out.print("Enter Name: ");
+                String n2 = sc.nextLine();
+                System.out.print("Enter Type: ");
+                String t2 = sc.nextLine();
+                acc = new BankAccount(n2, t2);
+                break;
+
+            case 3:
+                System.out.print("Enter Name: ");
+                String n3 = sc.nextLine();
+                System.out.print("Enter Type: ");
+                String t3 = sc.nextLine();
+                System.out.print("Enter Initial Balance: ");
+                float b3 = sc.nextFloat();
+                acc = new BankAccount(n3, t3, b3);
+                break;
+
+            default:
+                System.out.println("Invalid choice!");
+        }
+
+        do {
+            System.out.println("1. Deposit");
+            System.out.println("2. Deposit (with mode)");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Display Account");
+            System.out.println("5. Show Total Accounts");
+            System.out.println("0. Exit");
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter amount: ");
+                    acc.deposit(sc.nextFloat());
+                    break;
+
+                case 2:
+                    System.out.print("Enter amount: ");
+                    float dAmt = sc.nextFloat();
+                    sc.nextLine();
+                    System.out.print("Enter mode (Cash/Cheque): ");
+                    acc.deposit(dAmt, sc.nextLine());
+                    break;
+
+                case 3:
+                    System.out.print("Enter amount: ");
+                    acc.withdraw(sc.nextFloat());
+                    break;
+
+                case 4:
+                    acc.display();
+                    break;
+
+                case 5:
+                    BankAccount.showTotalAccounts();
+                    break;
+
+                case 0:
+                    System.out.println("Thank you!");
+                    break;
+
+                default:
+                    System.out.println("Invalid input!");
+            }
+
+        } while (choice != 0);
+        sc.close();
+    }
+}
