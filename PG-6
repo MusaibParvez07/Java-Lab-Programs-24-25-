@@ -1,86 +1,105 @@
-package javaprograms;
+package javaProgramming;
 import java.util.Scanner;
 
-interface Personal {
-    void personalDetails(String name, int age);
+class InvalidAgeException extends Exception {
+    InvalidAgeException(String msg) {
+        super(msg);
+    }
 }
 
-interface Official {
-    void officialDetails(String designation, String department);
+class InvalidHeightException extends Exception {
+    InvalidHeightException(String msg) {
+        super(msg);
+    }
 }
 
-class Employee implements Personal, Official {
-    String name, designation, department;
-    int age;
-
-    public void personalDetails(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public void officialDetails(String designation, String department) {
-        this.designation = designation;
-        this.department = department;
-    }
-
-    void display() {
-        System.out.println("\n--- Employee Details ---");
-        System.out.println("Name        : " + name);
-        System.out.println("Age         : " + age);
-        System.out.println("Designation : " + designation);
-        System.out.println("Department  : " + department);
+public class AgeDivisionMenu {
+    static void validateAge(int age) throws InvalidAgeException {
+    	if(age<0) {
+    		throw new InvalidAgeException("Age Cannot be negative. Age should be greater than 0");
+    	}
+    	else if (age < 18) {
+            throw new InvalidAgeException("Not Eligible for Service because of less Age");
+    	}
+    	else {
+        System.out.println("Eligible for Next Round");
+    	}
     }
     
-}
+    
+    static void validateHeight(float height) throws InvalidHeightException {
+    	if(height<=(5.6)) {
+    		throw new InvalidHeightException("Not Eligible for Service because of short Height");
+    	}
+    	else {
+    		System.out.println("Eligible for Service");
+    	}
+    }
+    
+    static int divide(int a, int b) {
+        if (b == 0)
+            throw new ArithmeticException("Cannot divide by zero");
+        return a/b;
+    }
 
-public class MultiInterface {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
-        Employee emp = new Employee();
-        int choice;
+        int choice, age, a1, a2, result;
+        float h;
 
-        do {
-            System.out.println("\n--- Menu ---");
-            System.out.println("1. Enter Personal Details");
-            System.out.println("2. Enter Official Details");
-            System.out.println("3. Display Employee Details");
-            System.out.println("4. Exit");
-            System.out.print("Enter choice: ");
+        while (true) {
+            System.out.println("\n--- MENU ---");
+            System.out.println("1. To Validate Age");
+            System.out.println("2. To Validate Height");
+            System.out.println("3. To Divide two Numbers");
+            System.out.println("4. To Exit");
+            System.out.print("Enter your choice: ");
             choice = sc.nextInt();
-            sc.nextLine(); 
 
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter Name: ");
-                    String name = sc.nextLine();
-                    System.out.print("Enter Age: ");
-                    int age = sc.nextInt();
-                    sc.nextLine();
-                    emp.personalDetails(name, age);
-                    System.out.println("Personal details saved.");
-                    break;
+            try {
+                switch (choice) {
 
-                case 2:
-                    System.out.print("Enter Designation: ");
-                    String desig = sc.nextLine();
-                    System.out.print("Enter Department: ");
-                    String dept = sc.nextLine();
-                    emp.officialDetails(desig, dept);
-                    System.out.println("Official details saved.");
-                    break;
+                    case 1:
+                        System.out.print("Enter your age: ");
+                        age = sc.nextInt();
+                        validateAge(age);
+                        break;
+                        
+                    case 2:
+                        System.out.print("Enter your height: ");
+                        h = sc.nextFloat();
+                        validateHeight(h);
+                        break;
 
-                case 3:
-                    emp.display();
-                    break;
+                    case 3:
+                        System.out.print("Enter First number: ");
+                        a1 = sc.nextInt();
+                        System.out.print("Enter Second number: ");
+                        a2 = sc.nextInt();
+                        result=divide(a1, a2);
+                        System.out.println("Division of two numbers is: " + result);
+                        break;
 
-                case 4:
-                    System.out.println("Exiting...");
-                    break;
+                    case 4:
+                        System.out.println("Program terminated");
+                        break;
 
-                default:
-                    System.out.println("Invalid choice! Try again.");
+                    default:
+                        System.out.println("Invalid choice");
+                }
             }
-        } while (choice != 4);
-        sc.close();
+            catch (InvalidAgeException e) {
+                System.out.println("Custom Exception:  " +e.getMessage());
+            }
+            catch (InvalidHeightException e) {
+                System.out.println("Custom Exception:  " +e.getMessage());
+            }
+            catch (ArithmeticException e) {
+                System.out.println("Predefined Exception:  " +e.getMessage());
+
+            }
+            
+        } 
     }
 }
