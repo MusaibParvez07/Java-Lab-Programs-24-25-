@@ -1,0 +1,52 @@
+// package p.api inside Java Resources (StudentResourse) Add this code only
+
+import java.util.ArrayList;
+import java.util.List;
+import p.model.*;
+
+private static List<Student> students = new ArrayList<>();
+
+// get
+if (students.isEmpty()) {
+			response.getWriter().println("NO record found");
+			return;
+		}
+		
+		for (Student s: students) {
+			response.getWriter().println("Id: " + s.id + " Name: " + s.name + " Age: " + s.age);
+		}
+		
+//post
+int id = Integer.parseInt(request.getParameter("id"));
+		String name = request.getParameter("name");
+		int age = Integer.parseInt(request.getParameter("age"));
+		
+		students.add(new Student(name, id, age));
+		response.getWriter().println("Student Added");
+
+//put
+int id = Integer.parseInt(request.getParameter("id"));
+		String name = request.getParameter("name");
+		int age = Integer.parseInt(request.getParameter("age"));
+		boolean found = false;
+		for (Student s: students) {
+			if (s.id == id) {
+				found = true;
+				s.name = name;
+				s.age = age;
+				break;
+			}
+		}
+		
+		if (found) {
+			response.getWriter().println("Student Updated");
+		}
+		else 
+		{
+			response.getWriter().println("Student not found");
+		}
+
+//delete
+int id = Integer.parseInt(request.getParameter("id"));
+		students.removeIf(s -> s.id == id);
+		response.getWriter().println("Student Deleted");
