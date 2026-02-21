@@ -1,0 +1,60 @@
+package javaProgramming;
+
+class Thread1 extends Thread {
+    public void run() {
+        try {
+            for (int i = 1; i <= 5; i++) {
+                System.out.println("Thread1: " + i);
+                Thread.yield();
+                Thread.sleep(2000); // TIMED_WAITING
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Thread1 interrupted");
+        }
+        System.out.println("Thread1 finished Execution.");
+    }
+}
+
+class Thread2 extends Thread {
+    public void run() {
+        try {
+            for (int i = 10; i <= 15; i++) {
+                System.out.println("Thread2: " + i);
+                Thread.yield();
+                Thread.sleep(2000); // TIMED_WAITING
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Thread2 interrupted");
+        }
+        System.out.println("Thread2 finished Execution.");
+    }
+}
+
+public class Threads {
+    public static void main(String[] args) throws InterruptedException {
+
+        Thread1 t1 = new Thread1();
+        Thread2 t2 = new Thread2();
+
+        // NEW state
+        System.out.println("Thread1 State (Before start): " + t1.getState());
+        System.out.println("Thread2 State (Before start): " + t2.getState());
+
+        t1.start();
+        t2.start();
+
+        // RUNNABLE / TIMED_WAITING
+        Thread.sleep(500);
+        System.out.println("Thread1 State (After start): " + t1.getState());
+        System.out.println("Thread2 State (After start): " + t2.getState());
+
+        t1.join();
+        t2.join();
+        t2.stop();
+
+        // TERMINATED
+        System.out.println("Thread1 State (After completion): " + t1.getState());
+        System.out.println("Thread2 State (After completion): " + t2.getState());
+    }
+}
+
